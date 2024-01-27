@@ -1,4 +1,0 @@
-Flask
-openaq
-flask_sqlalchemy
-python-dotenv

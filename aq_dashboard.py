@@ -11,18 +11,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 DB = SQLAlchemy(app)
 
 
-class Config(object):
-    '''
-    the record class object is setting and retaining
-    information about the environment. This will help
-    others who access or use this module to have
-    the correct settings in place.
-    '''
-
-
 class Record(DB.Model):
     '''
-    the record function will take information from the database
+    The record function will take information from the database
     to fill a data table. A primary key named id is created strictly
     as an integer value. datetime is created as column restricted to 25
     rows as string objects. the value column will use floats while making
@@ -34,7 +25,8 @@ class Record(DB.Model):
 
     def __repr__(self):
         '''
-        this is the repr
+        The __repr__ function is returning a string that consists
+        of the requested values - id, datetime, and value.
         '''
         return f'Record: {self.id}, {self.datetime}, {self.value}'
 
@@ -59,7 +51,7 @@ def get_results():
 def edit_shell():
     '''
     The edit shell function returns an f string that shows
-    both the values of the databasze and the record.
+    both the values of the database and the record.
     '''
     return {'DB': DB, 'Record': Record}
 
@@ -68,7 +60,11 @@ def edit_shell():
 def root():
 
     '''
-    This is the root module docstring
+    The root function is querying the database for records with
+    air quality values which are greater than or equal to ten.
+    It then constructs a string representation of said records and
+    returns a string which will be displayed on a web page when the
+    root URL is accessed. 
     '''
     data = Record.query.filter(Record.value >= 10).all()
     return str([f'Record(datetime={record.datetime},\
@@ -77,7 +73,8 @@ def root():
 
 def test_record_model():
     '''
-    this is the test to check if things are working properly
+    The test_record_model function checks whether the Record model is 
+    working as expected.
     '''
     record = Record(id=1, datetime="2023-10-18T00:00:00Z", value=12.5)
     DB.session.add(record)
